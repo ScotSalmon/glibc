@@ -309,9 +309,10 @@ __pthread_mutex_lock_full (pthread_mutex_t *mutex)
 		&& (INTERNAL_SYSCALL_ERRNO (e, __err) == ESRCH
 		    || INTERNAL_SYSCALL_ERRNO (e, __err) == EDEADLK))
 	      {
-		assert (INTERNAL_SYSCALL_ERRNO (e, __err) != EDEADLK
+		/* assert (INTERNAL_SYSCALL_ERRNO (e, __err) != EDEADLK
 			|| (kind != PTHREAD_MUTEX_ERRORCHECK_NP
-			    && kind != PTHREAD_MUTEX_RECURSIVE_NP));
+			    && kind != PTHREAD_MUTEX_RECURSIVE_NP)); */
+		return EDEADLK;
 		/* ESRCH can happen only for non-robust PI mutexes where
 		   the owner of the lock died.  */
 		assert (INTERNAL_SYSCALL_ERRNO (e, __err) != ESRCH || !robust);
